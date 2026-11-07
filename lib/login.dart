@@ -140,10 +140,16 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+<<<<<<< HEAD
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const Welcome(username: 'Rhonda'), 
+=======
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter your email and password'),
+>>>>>>> 21d9d22f54b6ce6ac8b181879e982aff22a6b6a9
                       ),
                     );
                   },
