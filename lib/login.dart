@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcome.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -41,7 +42,7 @@ class Login extends StatelessWidget {
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Password e.g. Hammam26_Fatih',
+                  hintText: 'Password',
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_off_outlined),
                   filled: true,
@@ -104,6 +105,26 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
+              const Row(
+                children: [
+                  Icon(
+                    Icons.security,
+                    color: Colors.green,
+                    size: 16,
+                  ),
+                  SizedBox(width: 6),
+                  Text(
+                    'Your password is encrypted',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
               // Sign In Button
               SizedBox(
                 width: double.infinity,
@@ -118,10 +139,20 @@ class Login extends StatelessWidget {
                       side: const BorderSide(color: Colors.grey),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Welcome(username: 'Rhonda'), 
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Sign In',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
