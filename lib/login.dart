@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcome.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -41,7 +42,7 @@ class Login extends StatelessWidget {
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Password e.g. Hammam26_Fatih',
+                  hintText: 'Password',
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_off_outlined),
                   filled: true,
@@ -139,9 +140,16 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+<<<<<<< HEAD
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Welcome(username: 'Rhonda'), 
+=======
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Please enter your email and password'),
+>>>>>>> 21d9d22f54b6ce6ac8b181879e982aff22a6b6a9
                       ),
                     );
                   },
