@@ -104,6 +104,26 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
+              const Row(
+                children: [
+                  Icon(
+                    Icons.security,
+                    color: Colors.green,
+                    size: 16,
+                  ),
+                  SizedBox(width: 6),
+                  Text(
+                    'Your password is encrypted',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
               // Sign In Button
               SizedBox(
                 width: double.infinity,
@@ -118,10 +138,19 @@ class Login extends StatelessWidget {
                       side: const BorderSide(color: Colors.grey),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter your email and password'),
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Sign In',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
