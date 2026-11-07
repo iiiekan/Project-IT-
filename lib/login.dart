@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dashboard.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -139,12 +140,13 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter your email and password'),
-                      ),
-                    );
-                  },
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const DashboardScreen(),
+    ),
+  );
+},
                   child: const Text(
                     'Sign In',
                     style: TextStyle(
