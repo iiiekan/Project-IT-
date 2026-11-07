@@ -29,8 +29,8 @@ class Login extends StatelessWidget {
                   hintText: 'Username or Email',
                   prefixIcon: const Icon(Icons.person_outline),
                   filled: true,
-                  fillColor: Colors.grey[100],
-                  border: OutlineInputBorder(
+                  fillColor: Colors.grey.withOpacity(0.5),
+                  border: OutlineInputBorder
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
                   ),
@@ -45,7 +45,7 @@ class Login extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_off_outlined),
                   filled: true,
-                  fillColor: Colors.grey[100],
+                  fillColor: Colors.grey.withOpacity(0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -61,7 +61,7 @@ class Login extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_off_outlined),
                   filled: true,
-                  fillColor: Colors.grey[100],
+                  fillColor: Colors.grey.withOpacity(0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(color: Colors.blue, width: 1.5),
