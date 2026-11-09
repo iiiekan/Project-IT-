@@ -18,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Profil
               Row(
                 children: [
                   CircleAvatar(
@@ -31,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        username,
+                        username, // Menampilkan username dinamis
                         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
@@ -56,7 +55,6 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Kotak Standar Profil Informasi
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -79,7 +77,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
 
-              // Tombol Log Out (Kembali ke Login)
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -87,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => const Login()), // Menggunakan kelas Login
                       (route) => false,
                     );
                   },
@@ -104,23 +101,20 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
 
-      // BOTTOM NAVIGATION BAR DI PROFILE SCREEN
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        currentIndex: 2, // Indeks 2 untuk Profile
+        currentIndex: 2,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (index) {
           if (index == 0) {
-            // Kembali ke Home / Dashboard
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => DashboardScreen(username: username)),
             );
           } else if (index == 1) {
-            // Pindah ke Inbox
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => InboxScreen(username: username)),
@@ -133,11 +127,11 @@ class ProfileScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail_outline), // Ikon Inbox di tengah
+            icon: Icon(Icons.mail_outline),
             label: 'Inbox',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Ikon Profile
+            icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],

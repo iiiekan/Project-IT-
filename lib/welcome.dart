@@ -23,7 +23,6 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  // Daftar kategori dengan ikon khusus untuk setiap pilihan
   final List<CategoryItem> categories = [
     CategoryItem(title: 'Personal Emails', icon: Icons.person),
     CategoryItem(title: 'Professional Emails', icon: Icons.work),
@@ -61,13 +60,12 @@ class _WelcomeState extends State<Welcome> {
               ),
               const SizedBox(height: 20),
 
-              // pake ListWheelScrollView buat efek Carousel 
               Expanded(
                 child: ListWheelScrollView.useDelegate(
-                  itemExtent: 90, // Tinggi setiap item di roda
-                  perspective: 0.003, // Memberikan efek melengkung 3D carousel
-                  diameterRatio: 1.5, // Ukuran lengkungan roda
-                  physics: const FixedExtentScrollPhysics(), // Memastikan berhenti pas di tengah
+                  itemExtent: 90,
+                  perspective: 0.003,
+                  diameterRatio: 1.5,
+                  physics: const FixedExtentScrollPhysics(),
                   childDelegate: ListWheelChildBuilderDelegate(
                     childCount: categories.length,
                     builder: (context, index) {
@@ -88,18 +86,9 @@ class _WelcomeState extends State<Welcome> {
                               color: item.isSelected ? Colors.black : Colors.grey.shade300,
                               width: 1.5,
                             ),
-                            boxShadow: [
-                              if (item.isSelected)
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.15),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                )
-                            ],
                           ),
                           child: Row(
                             children: [
-                              // Kotak ikon yang lebih besar dengan ikon di dalamnya
                               Container(
                                 width: 56,
                                 height: 56,
@@ -109,15 +98,14 @@ class _WelcomeState extends State<Welcome> {
                                 ),
                                 child: Icon(
                                   item.icon,
-                                  size: 28, // Ikon dibuat lebih besar
+                                  size: 28,
                                   color: item.isSelected ? Colors.white : Colors.grey[700],
                                 ),
                               ),
                               const SizedBox(width: 16),
-                              // Teks Kategori
                               Expanded(
                                 child: Text(
-                                 item.title,
+                                  item.title,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -125,7 +113,6 @@ class _WelcomeState extends State<Welcome> {
                                   ),
                                 ),
                               ),
-                              // Indikator centang jika dipilih
                               if (item.isSelected)
                                 const Icon(Icons.check_circle, color: Colors.white, size: 24),
                             ],
@@ -150,7 +137,7 @@ class _WelcomeState extends State<Welcome> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DashboardScreen(), 
+                          builder: (context) => DashboardScreen(username: widget.username), 
                         ),
                       );
                     } else {
