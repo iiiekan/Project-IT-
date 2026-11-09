@@ -1,8 +1,41 @@
 import 'package:flutter/material.dart';
 import 'welcome.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // 1. Deklarasikan TextEditingController
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // 2. Dispose controller dengan benar untuk mencegah memory leak
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _handleLogin() {
+    // 3. Validasi input kosong dan tampilkan SnackBar
+    if (_usernameController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields.')),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Welcome(username: _usernameController.text.trim()), 
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +59,7 @@ class Login extends StatelessWidget {
               const SizedBox(height: 40),
 
               TextField(
+                controller: _usernameController, // Hubungkan controller
                 decoration: InputDecoration(
                   hintText: 'Username or Email',
                   prefixIcon: const Icon(Icons.person_outline),
@@ -40,6 +74,7 @@ class Login extends StatelessWidget {
               const SizedBox(height: 16),
 
               TextField(
+                controller: _passwordController, // Hubungkan controller
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -83,7 +118,6 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // terms and agreement disini
               RichText(
                 textAlign: TextAlign.center,
                 text: const TextSpan(
@@ -125,7 +159,6 @@ class Login extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              // Sign In Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -139,14 +172,7 @@ class Login extends StatelessWidget {
                       side: const BorderSide(color: Colors.grey),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Welcome(username: 'Rhonda'), 
-                      ),
-                    );
-                  },
+                  onPressed: _handleLogin, // Panggil fungsi validasi
                   child: const Text(
                     'Sign In',
                     style: TextStyle(
@@ -158,7 +184,6 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              // OR Use divider
               const Text(
                 '- OR Use -',
                 style: TextStyle(color: Colors.grey, fontSize: 12),
