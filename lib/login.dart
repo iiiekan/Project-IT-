@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'welcome.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Login> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<Login> {
   // 1. Deklarasikan TextEditingController
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
