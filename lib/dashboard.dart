@@ -1,8 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'inbox_screen.dart';
+import 'profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  final String username;
+
+  const DashboardScreen({super.key, this.username = 'Rhonda'});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +20,9 @@ class DashboardScreen extends StatelessWidget {
             children: [
 
               // 1. HEADER
-              const Text(
-                'Good Evening, Rhonda',
-                style: TextStyle(
+              Text(
+                'Good Evening, $username',
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -51,37 +54,31 @@ class DashboardScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: const [
-
                         StatItem(
                           icon: Icons.article,
                           label: 'Newsletters',
                           count: '67',
                         ),
-
                         StatItem(
                           icon: Icons.person,
                           label: 'Personal',
                           count: '14',
                         ),
-
                         StatItem(
                           icon: Icons.calendar_today,
                           label: 'Deadlines',
                           count: '5',
                         ),
-
                         StatItem(
                           icon: Icons.groups,
                           label: 'Meetings',
                           count: '11',
                         ),
-
                         StatItem(
                           icon: Icons.local_shipping,
                           label: 'Delivery',
                           count: '18',
                         ),
-
                       ],
                     ),
                   ),
@@ -101,19 +98,15 @@ class DashboardScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-
                       Container(
                         width: 4,
                         height: 85,
                         color: Colors.red,
                       ),
-
                       const SizedBox(width: 15),
-
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Text(
                             'You might want to see this!',
                             style: TextStyle(
@@ -121,18 +114,12 @@ class DashboardScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-
                           SizedBox(height: 12),
-
                           Text('• Check out our new release!'),
-
                           SizedBox(height: 8),
-
                           Text('• Assignment Due Today!'),
-
                         ],
                       ),
-
                     ],
                   ),
                 ),
@@ -184,34 +171,44 @@ class DashboardScreen extends StatelessWidget {
       // 5. BOTTOM NAVIGATION BAR
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        items: const [
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.folder),
-            label: 'Documents',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-
-        ],
         currentIndex: 0,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        onTap: (index) {
+          if (index == 1) {
+            // Navigasi ke Inbox Screen saat ikon tengah diklik
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const InboxScreen()),
+            );
+          } else if (index == 2) {
+            // Navigasi ke Profile Screen saat ikon profil diklik
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen(username: username)),
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mail_outline), // Ikon Inbox di tengah
+            label: 'Inbox',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person), // Ikon Profile
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
 }
-
 
 // STATISTICS ITEM
 class StatItem extends StatelessWidget {
@@ -233,15 +230,12 @@ class StatItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         children: [
-
           Icon(
             icon,
             size: 22,
             color: Colors.black,
           ),
-
           const SizedBox(height: 6),
-
           Text(
             count,
             style: const TextStyle(
@@ -249,9 +243,7 @@ class StatItem extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-
           const SizedBox(height: 4),
-
           Text(
             label,
             textAlign: TextAlign.center,
@@ -260,13 +252,11 @@ class StatItem extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-
         ],
       ),
     );
   }
 }
-
 
 // TODAY NOTIFICATION ITEM
 class TodayItem extends StatelessWidget {
@@ -291,11 +281,8 @@ class TodayItem extends StatelessWidget {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(16),
       ),
-
       child: Row(
         children: [
-
-          // ICON
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -308,15 +295,11 @@ class TodayItem extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-
           const SizedBox(width: 12),
-
-          // NOTIFICATION TEXT
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Text(
                   time,
                   style: const TextStyle(
@@ -324,9 +307,7 @@ class TodayItem extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-
                 const SizedBox(height: 3),
-
                 Text(
                   title,
                   style: const TextStyle(
@@ -334,9 +315,7 @@ class TodayItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 3),
-
                 Text(
                   subtitle,
                   style: const TextStyle(
@@ -344,11 +323,9 @@ class TodayItem extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-
               ],
             ),
           ),
-
         ],
       ),
     );
