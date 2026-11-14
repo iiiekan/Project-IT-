@@ -2,10 +2,70 @@ import 'package:flutter/material.dart';
 import 'dashboard.dart';
 import 'profile_screen.dart';
 
-class InboxScreen extends StatelessWidget {
+class EmailItem {
+  final String title;
+  final String sender;
+  final String time;
+  final String preview;
+  final IconData icon;
+
+  EmailItem({
+    required this.title,
+    required this.sender,
+    required this.time,
+    required this.preview,
+    required this.icon,
+  });
+}
+
+class InboxScreen extends StatefulWidget {
   final String username;
 
   const InboxScreen({super.key, this.username = 'Rhonda'});
+
+  @override
+  State<InboxScreen> createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+  // Daftar email dengan kategori bervariasi yang bisa disusun ulang
+  final List<EmailItem> _emails = [
+    EmailItem(
+      title: 'Weekly Tech Newsletter',
+      sender: 'news@technews.com',
+      time: 'Mon, 17 Aug 2026, 09.00 AM',
+      preview: 'Check out the top 10 frameworks to learn this year...',
+      icon: Icons.article,
+    ),
+    EmailItem(
+      title: 'Family Dinner Plan',
+      sender: 'mom@gmail.com',
+      time: 'Mon, 17 Aug 2026, 08.45 AM',
+      preview: 'Don’t forget to bring the dessert we discussed...',
+      icon: Icons.person,
+    ),
+    EmailItem(
+      title: 'Project Milestone Meeting',
+      sender: 'boss@altaglobalsch.com',
+      time: 'Mon, 17 Aug 2026, 08.30 AM',
+      preview: 'We will review the final prototype presentation tomorrow morning.',
+      icon: Icons.groups,
+    ),
+    EmailItem(
+      title: 'Package Delivery Update',
+      sender: 'support@delivery.com',
+      time: 'Mon, 17 Aug 2026, 08.15 AM',
+      preview: 'Your order has been shipped and is out for delivery today.',
+      icon: Icons.local_shipping,
+    ),
+    EmailItem(
+      title: 'Security Alert: New Sign-in',
+      sender: 'security@account.google.com',
+      time: 'Mon, 17 Aug 2026, 08.00 AM',
+      preview: 'We noticed a new login from an iOS device in your area.',
+      icon: Icons.security,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,66 +80,81 @@ class InboxScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Kartu Utama Atas
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.warning_amber_rounded, size: 36, color: Colors.black),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('IT - 12 [X] Class', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                            Chip(label: Text('5 Emails', style: TextStyle(fontSize: 10))),
-                          ],
-                        ),
-                        const Text('To: student@altaglobalsch.com', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                        const Text('Mon, 17 Aug 2026, 08.27 AM', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            // Info ringkas petunjuk interaksi
+            const Text(
+              'Drag and drop items to reorder your priority inbox categories:',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
-            const SizedBox(height: 16),
-            // ListView untuk Daftar Pesan
+            const SizedBox(height: 12),
+
+            // ReorderableListView agar email bisa disusun ulang secara manual
             Expanded(
-              child: ListView.builder(
-                itemCount: 5,
+              child: ReorderableListView.builder(
+                itemCount: _emails.length,
+                onReorder: (oldIndex, newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    final EmailItem item = _emails.removeAt(oldIndex);
+                    _emails.insert(newIndex, item);
+                  });
+                },
                 itemBuilder: (context, index) {
+                  final email = _emails[index];
                   return Container(
+                    key: ValueKey(email.title + index.toString()),
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey.shade300),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.02),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.warning, color: Colors.black),
+                        Icon(email.icon, color: Colors.black, size: 28),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('IT - 12 [X] Class', style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text('Mon, 17 Aug 2026, 08.27 AM', style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              Text('Hi apakabar, jangan lupa tugasnya~', style: TextStyle(fontSize: 12)),
+                            children: [
+                              Text(
+                                email.title,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                email.sender,
+                                style: const TextStyle(fontSize: 12, color: Colors.blueGrey),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                email.preview,
+                                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                email.time,
+                                style: const TextStyle(fontSize: 10, color: Colors.grey),
+                              ),
                             ],
                           ),
                         ),
+                        const SizedBox(width: 8),
+                        // Handle icon penanda bisa digeser
+                        const Icon(Icons.drag_handle, color: Colors.grey),
                       ],
                     ),
                   );
@@ -90,7 +165,7 @@ class InboxScreen extends StatelessWidget {
         ),
       ),
 
-      // BOTTOM NAVIGATION BAR DI INBOX SCREEN
+      // BOTTOM NAVIGATION BAR
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         currentIndex: 1, // Indeks 1 untuk Inbox (tengah)
@@ -100,16 +175,14 @@ class InboxScreen extends StatelessWidget {
         showUnselectedLabels: false,
         onTap: (index) {
           if (index == 0) {
-            // Kembali ke Home / Dashboard
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => DashboardScreen(username: username)),
+              MaterialPageRoute(builder: (context) => DashboardScreen(username: widget.username)),
             );
           } else if (index == 2) {
-            // Pindah ke Profile
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfileScreen(username: username)),
+              MaterialPageRoute(builder: (context) => ProfileScreen(username: widget.username)),
             );
           }
         },
@@ -119,11 +192,11 @@ class InboxScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail_outline), // Ikon Inbox di tengah
+            icon: Icon(Icons.mail_outline),
             label: 'Inbox',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Ikon Profile
+            icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
