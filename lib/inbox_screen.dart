@@ -93,7 +93,7 @@ class _InboxScreenState extends State<InboxScreen> {
             Expanded(
               child: ReorderableListView.builder(
                 itemCount: _emails.length,
-                onReorder: (oldIndex, newIndex) {
+                onReorderItem: (oldIndex, newIndex) {
                   setState(() {
                     if (oldIndex < newIndex) {
                       newIndex -= 1;
@@ -114,7 +114,7 @@ class _InboxScreenState extends State<InboxScreen> {
                       border: Border.all(color: Colors.grey.shade300),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
